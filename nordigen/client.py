@@ -97,8 +97,14 @@ class AccountClient(NordigenClient):
         url = self.url(fragment=f"accounts/{id}/details")
         return self.get(url)
 
-    def transactions(self, id):
-        url = self.url(fragment=f"accounts/{id}/transactions")
+    def transactions(self, id, date_from=None, date_to=None):
+        url_args = {
+            "date_from": date_from,
+            "date_to": date_to,
+        }
+        url_args = {k:v for k,v in url_args.items() if v}
+
+        url = self.url(fragment=f"accounts/{id}/transactions", url_args=url_args)
         return self.get(url)
 
 
